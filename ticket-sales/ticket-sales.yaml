@@ -1,0 +1,953 @@
+schemaVersion: 3
+meta:
+  sourceVersionId: d3bb44a7-3e24-4a5c-b36f-2afda2faac00 # DO NOT CHANGE - Hex uses this to match up project versions when reimporting the file
+  description: null
+  projectId: 7dbfe4c4-b853-4b7d-9271-4ff48e5cb384 # DO NOT CHANGE - Unique ID of the project from which this file was generated
+  title: Ticket sales
+  timezone: null
+  appTheme: LIGHT
+  codeLanguage: PYTHON
+  status:
+    name: Approved
+  categories:
+    - name: External
+  castDecimalsDefault: true
+  logicQueryCacheTimeout: null
+  publishedQueryCacheTimeout: null
+  hexType: PROJECT
+projectAssets:
+  dataConnections: []
+  envVars:
+    - name: schema
+      value: dbt_dev
+  secrets: []
+sharedAssets:
+  secrets: []
+  vcsPackages: []
+  dataConnections:
+    - dataConnectionId: 1011abc8-9daa-4067-8b77-97b2f26e40ab # Big Query (bigquery)
+    - dataConnectionId: c0610383-efc7-44c6-bd2f-0252dd6d3c94 # BG_dagster (bigquery)
+  externalFileIntegrations: []
+cells:
+  - cellType: TEXT
+    cellId: a68f9fa8-7c0c-42c8-9da8-902d01ca6a5a # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Sales results period comparaison
+  - cellType: BLOCK
+    cellId: b9aaa1a8-a4a7-4766-a2af-41d67b0ab8ca # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      blockConfig:
+        sqlCellId: 9cc19f3e-4626-413c-abe5-42fd5f990001
+        chartCellId: 8b90c027-b65c-44ef-a690-612ec050567f
+        activeTab: display
+      cells:
+        - cellType: SQL
+          cellId: 9cc19f3e-4626-413c-abe5-42fd5f990001
+          cellLabel: resellers
+          config:
+            source: |-
+              select 
+              replace(name,",","") as name
+              from dbt_dev.reseller
+            dataFrameCell: false
+            dataConnectionId: c0610383-efc7-44c6-bd2f-0252dd6d3c94
+            resultVariableName: resellers
+            useRichDisplay: true
+            sqlCellOutputType: PANDAS
+            useQueryMode: false
+            castDecimals: true
+            useNativeDates: true
+            outputFilteredResult: true
+            allowDuplicateColumns: false
+            tableDisplayConfig:
+              pageSize: 50
+              height: null
+              hideIcons: false
+              hideIndex: false
+              defaultSortColumn: null
+              defaultSortIndexColumn: null
+              defaultSortDirection: ASC
+              conditionalFormatting: null
+              calcs: null
+              filters: null
+              columnProperties:
+                - originalName: f0_
+                  renameTo: null
+                  size: 294
+                  wrapText: null
+                  displayFormat: null
+                - originalName: name
+                  renameTo: null
+                  size: 207
+                  wrapText: null
+                  displayFormat: null
+                - originalName: row-index-0
+                  renameTo: null
+                  size: 46
+                  wrapText: null
+                  displayFormat: null
+              columnOrdering: null
+              customColumnOrdering: null
+              pinnedColumns: null
+              hiddenColumns: null
+              pinIndexColumns: false
+              showAggregations: false
+              columnAggregations: null
+        - cellType: CHARTV2
+          cellId: 8b90c027-b65c-44ef-a690-612ec050567f
+          cellLabel: null
+          config:
+            height: null
+            chartSpec:
+              type: layered
+              layers:
+                - id: e0060b09-e319-4396-80ea-ca20235f503f
+                  xAxis:
+                    type: string
+                    style:
+                      grid:
+                        style: solid
+                      ticks: {}
+                      labels: {}
+                    dataFrameColumn: name
+                  series:
+                    - id: d496a741-311a-46b7-ab51-2cf5ab299119
+                      type: bar
+                      axis:
+                        type: number
+                        style:
+                          grid:
+                            style: solid
+                          ticks: {}
+                          labels: {}
+                      dataFrameColumns: []
+                      colorOrder: ascending
+                      color:
+                        type: static
+                      opacity:
+                        type: static
+                        value: 1
+                      tooltip:
+                        type: auto
+                      barWidth: 1
+                      orientation: vertical
+                      layout: stacked
+                  dataFrame: resellers
+              settings:
+                legend:
+                  position: right
+                tooltip: true
+                selectionEnabled: false
+            chartSelection: {}
+            colorMappings: {}
+            resultVariable: filter_result
+            outputResult: false
+            displayType: CHART
+            displayTableConfig: null
+  - cellType: SQL
+    cellId: 6fd29725-95db-4f56-8b45-a7af1048ab5f # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Event types
+    config:
+      source: select distinct type from dbt_dev.event
+      dataFrameCell: false
+      dataConnectionId: c0610383-efc7-44c6-bd2f-0252dd6d3c94
+      resultVariableName: event_types
+      useRichDisplay: false
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig: null
+  - cellType: INPUT
+    cellId: 53079f99-4bbb-4104-8549-d5417f95eec7 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Event type
+    config:
+      inputType: MULTISELECT
+      name: event_type
+      outputType: DYNAMIC
+      options:
+        multiValueOptions:
+          dfName: event_types
+          columnName: type
+          variableName: event_types['type']
+      defaultValue:
+        - __hex_multiselect_select_all_option__
+  - cellType: INPUT
+    cellId: 4e0f01a1-930b-4376-bdad-9c3e67494b23 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Reseller
+    config:
+      inputType: MULTISELECT
+      name: reseller
+      outputType: DYNAMIC
+      options:
+        multiValueOptions:
+          dfName: resellers
+          columnName: name
+          variableName: resellers['name']
+      defaultValue:
+        - __hex_multiselect_select_all_option__
+  - cellType: SQL
+    cellId: 19ec14cb-640d-4cb9-8987-0ba16280d330 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Monthly
+    config:
+      source: |-
+        select 
+        DATE_TRUNC(order_date, MONTH) AS month,
+        SUM(total_amount) as total_amount,
+        from dbt_dev.order odr
+        join dbt_dev.event evt on odr.event_id = evt.id
+        left join dbt_dev.reseller res on odr.reseller_id = res.id
+        where 
+        res.name IN ({{reseller | array}})
+        and evt.type IN ({{event_type | array}})
+        group by 1
+        order by 1
+        limit 100
+      dataFrameCell: false
+      dataConnectionId: c0610383-efc7-44c6-bd2f-0252dd6d3c94
+      resultVariableName: monthly_sales
+      useRichDisplay: false
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig: null
+  - cellType: BLOCK
+    cellId: a1ff02d4-145b-4bd8-a55d-63614ee49a42 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      blockConfig:
+        sqlCellId: e713edc1-e040-4a63-b25f-e4f2c6db6345
+        chartCellId: 1e29b438-9957-48d9-b7d0-3ed6a67d03f9
+        activeTab: chart
+      cells:
+        - cellType: SQL
+          cellId: e713edc1-e040-4a63-b25f-e4f2c6db6345
+          cellLabel: Sales
+          config:
+            source: |-
+              select
+              extract(year from month) as year,
+              extract(month from month) as month,
+              total_amount
+
+              from monthly_sales
+              where month >= '2019-01-01'
+              and month < '2021-01-01'
+            dataFrameCell: false
+            dataConnectionId: c0610383-efc7-44c6-bd2f-0252dd6d3c94
+            resultVariableName: dataframe
+            useRichDisplay: true
+            sqlCellOutputType: PANDAS
+            useQueryMode: false
+            castDecimals: true
+            useNativeDates: true
+            outputFilteredResult: true
+            allowDuplicateColumns: false
+            tableDisplayConfig:
+              pageSize: 50
+              height: null
+              hideIcons: false
+              hideIndex: false
+              defaultSortColumn: null
+              defaultSortIndexColumn: null
+              defaultSortDirection: ASC
+              conditionalFormatting: null
+              calcs: null
+              filters: null
+              columnProperties: []
+              columnOrdering: null
+              customColumnOrdering: null
+              pinnedColumns: null
+              hiddenColumns: null
+              pinIndexColumns: false
+              showAggregations: false
+              columnAggregations: null
+        - cellType: CHARTV2
+          cellId: 1e29b438-9957-48d9-b7d0-3ed6a67d03f9
+          cellLabel: " Sales results 2019 vs. 2020"
+          config:
+            height: null
+            chartSpec:
+              type: layered
+              facet: {}
+              layers:
+                - id: c7019440-2916-4ab0-ae69-cf4ad5c14f62
+                  xAxis:
+                    type: number
+                    style:
+                      grid:
+                        style: solid
+                      ticks: {}
+                      labels: {}
+                    dataFrameColumn: month
+                  series:
+                    - id: 4afce435-fc10-4410-a7fa-46c5a2ec5f95
+                      type: line
+                      axis:
+                        type: number
+                        style:
+                          grid:
+                            style: solid
+                          ticks: {}
+                          labels: {}
+                        aggregate: sum
+                      dataFrameColumns:
+                        - total_amount
+                      colorOrder: ascending
+                      color:
+                        type: static
+                        dataType: number
+                        aggregate: sum
+                        dataFrameColumn: year
+                      opacity:
+                        type: static
+                        value: 1
+                      tooltip:
+                        type: auto
+                      point: false
+                      stroke: solid
+                  dataFrame: dataframe
+              settings:
+                legend:
+                  position: right
+                tooltip: true
+                selectionEnabled: false
+            chartSelection: {}
+            colorMappings: {}
+            resultVariable: filter_result
+            outputResult: false
+            displayType: CHART
+            displayTableConfig: null
+  - cellType: BLOCK
+    cellId: 38b3e616-7c87-44f6-b28f-a8d6cd544b0a # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      blockConfig:
+        sqlCellId: 2871b7ff-5cc0-4e83-9a42-04a94b929697
+        chartCellId: 4802f304-eee9-4861-985f-14bb0330dc5c
+        activeTab: chart
+      cells:
+        - cellType: SQL
+          cellId: 2871b7ff-5cc0-4e83-9a42-04a94b929697
+          cellLabel: Result
+          config:
+            source: |-
+              select
+              month, 
+              total_amount
+              from monthly_sales
+              where month in ('2020-02-01','2019-02-01')
+            dataFrameCell: false
+            dataConnectionId: c0610383-efc7-44c6-bd2f-0252dd6d3c94
+            resultVariableName: dataframe_2
+            useRichDisplay: true
+            sqlCellOutputType: PANDAS
+            useQueryMode: false
+            castDecimals: true
+            useNativeDates: true
+            outputFilteredResult: true
+            allowDuplicateColumns: false
+            tableDisplayConfig:
+              pageSize: 50
+              height: null
+              hideIcons: false
+              hideIndex: false
+              defaultSortColumn: null
+              defaultSortIndexColumn: null
+              defaultSortDirection: ASC
+              conditionalFormatting: null
+              calcs: null
+              filters: null
+              columnProperties: []
+              columnOrdering: null
+              customColumnOrdering: null
+              pinnedColumns: null
+              hiddenColumns: null
+              pinIndexColumns: false
+              showAggregations: false
+              columnAggregations: null
+        - cellType: CHARTV2
+          cellId: 4802f304-eee9-4861-985f-14bb0330dc5c
+          cellLabel: Sales results (Feb. 2019 vs. Feb. 2020)
+          config:
+            height: 540
+            chartSpec:
+              type: layered
+              layers:
+                - id: 473469d1-462c-4111-92bf-ebdf88c02ed9
+                  xAxis:
+                    type: string
+                    style:
+                      grid:
+                        style: solid
+                      ticks: {}
+                      labels: {}
+                    dataFrameColumn: month
+                  series:
+                    - id: 43664582-30ac-4501-87ed-afa0ac96e45f
+                      type: bar
+                      axis:
+                        type: number
+                        style:
+                          grid:
+                            style: solid
+                          ticks: {}
+                          labels: {}
+                        title: total amount
+                        aggregate: sum
+                        numberFormat:
+                          format: CURRENCY
+                          currency: USD
+                          columnType: NUMBER
+                          numDecimalDigits: 2
+                          abbreviateLargeNumbers: true
+                      dataFrameColumns:
+                        - total_amount
+                      colorOrder: ascending
+                      color:
+                        type: static
+                      opacity:
+                        type: static
+                        value: 1
+                      tooltip:
+                        type: auto
+                      barWidth: 1
+                      orientation: vertical
+                      layout: grouped
+                  dataFrame: dataframe_2
+              settings:
+                legend:
+                  position: right
+                tooltip: true
+                selectionEnabled: false
+            chartSelection: {}
+            colorMappings: {}
+            resultVariable: filter_result
+            outputResult: false
+            displayType: CHART
+            displayTableConfig: null
+  - cellType: TEXT
+    cellId: 1aa552e6-8b83-4a56-bb93-bfb421128269 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Most popular tickers per region
+  - cellType: SQL
+    cellId: ca6d6999-328d-4b6d-8c9c-16b5ebcb6641 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Event regions
+    config:
+      source: |-
+        select 
+        distinct evt.region
+        from dbt_dev.event evt
+      dataFrameCell: false
+      dataConnectionId: c0610383-efc7-44c6-bd2f-0252dd6d3c94
+      resultVariableName: event_regions
+      useRichDisplay: false
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig: null
+  - cellType: INPUT
+    cellId: aba703bb-15fa-4932-8a29-3412a8696dcf # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Event region
+    config:
+      inputType: DROPDOWN
+      name: region
+      outputType: DYNAMIC
+      options:
+        valueOptions:
+          dfName: event_regions
+          columnName: region
+          variableName: event_regions['region']
+      defaultValue: AZ
+  - cellType: BLOCK
+    cellId: e45fd724-7193-4882-beac-c536ff76eb4e # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      blockConfig:
+        sqlCellId: c066451a-52c1-4e21-86d5-60b087dbbc24
+        chartCellId: fc6a669f-aa5e-48d6-85d7-9c69cf92d0f4
+        activeTab: chart
+      cells:
+        - cellType: SQL
+          cellId: c066451a-52c1-4e21-86d5-60b087dbbc24
+          cellLabel: Tickets sold per region
+          config:
+            source: |-
+              select
+              evt.region,
+              evt.name,
+              ord.number_purchased_tickets as tickets_sold
+
+              from dbt_dev.order ord
+              join dbt_dev.event evt on ord.event_id = evt.id
+              where evt.region = {{region}}
+            dataFrameCell: false
+            dataConnectionId: c0610383-efc7-44c6-bd2f-0252dd6d3c94
+            resultVariableName: tickets_sold_per_region
+            useRichDisplay: false
+            sqlCellOutputType: PANDAS
+            useQueryMode: false
+            castDecimals: true
+            useNativeDates: true
+            outputFilteredResult: true
+            allowDuplicateColumns: false
+            tableDisplayConfig: null
+        - cellType: CHARTV2
+          cellId: fc6a669f-aa5e-48d6-85d7-9c69cf92d0f4
+          cellLabel: Most popular per event region
+          config:
+            height: null
+            chartSpec:
+              type: layered
+              layers:
+                - id: 5e6c3691-0837-47ff-bfc4-0ba05118318c
+                  xAxis:
+                    sort: -x
+                    type: string
+                    style:
+                      ticks: {}
+                      labels: {}
+                    title: event name
+                    dataFrameColumn: name
+                  series:
+                    - id: b4615643-c850-4bc4-b9a3-a116ea46c765
+                      type: bar
+                      axis:
+                        type: number
+                        style:
+                          grid:
+                            style: solid
+                          ticks: {}
+                          labels: {}
+                        title: "# tickets sold"
+                        aggregate: sum
+                      dataFrameColumns:
+                        - tickets_sold
+                      colorOrder: ascending
+                      color:
+                        type: static
+                      opacity:
+                        type: static
+                        value: 1
+                      tooltip:
+                        type: auto
+                      barWidth: 1
+                      orientation: horizontal
+                      layout: grouped
+                  dataFrame: tickets_sold_per_region
+              settings:
+                legend:
+                  position: right
+                tooltip: true
+                selectionEnabled: false
+            chartSelection: {}
+            colorMappings: {}
+            resultVariable: filter_result
+            outputResult: false
+            displayType: CHART
+            displayTableConfig: null
+  - cellType: TEXT
+    cellId: 57f33f3f-247a-495b-9514-93f4d0045df4 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: h2
+          children:
+            - text: Correlation between commission rate and sales results
+  - cellType: SQL
+    cellId: 63b861ff-95d3-44d6-99d3-5b94199e38b5 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Sales res org
+    config:
+      source: |-
+        select 
+        odr.reseller_id,
+        evt.organizer_id,
+        sum(odr.total_amount) as amount
+        from dbt_dev.order odr 
+        join dbt_dev.event evt on odr.event_id = evt.id
+        group by 1,2
+      dataFrameCell: false
+      dataConnectionId: c0610383-efc7-44c6-bd2f-0252dd6d3c94
+      resultVariableName: sales_res_org
+      useRichDisplay: false
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig: null
+  - cellType: BLOCK
+    cellId: ed253530-de58-4004-ae77-8fe0f6010837 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      blockConfig:
+        sqlCellId: 07f98941-14ee-4581-8948-3f902afd1427
+        chartCellId: d6cb8043-5042-497a-9d19-9f6499e57f4d
+        activeTab: preview
+      cells:
+        - cellType: SQL
+          cellId: 07f98941-14ee-4581-8948-3f902afd1427
+          cellLabel: Amount per agreement
+          config:
+            source: |-
+              select 
+              agt.commission_rate,
+              sales.amount
+              from dbt_dev.reseller_organizer_agreement agt
+              left join sales_res_org as sales on agt.reseller_id = sales.reseller_id and agt.organizer_id = sales.organizer_id
+            dataFrameCell: false
+            dataConnectionId: c0610383-efc7-44c6-bd2f-0252dd6d3c94
+            resultVariableName: amount_per_agreement
+            useRichDisplay: false
+            sqlCellOutputType: PANDAS
+            useQueryMode: false
+            castDecimals: true
+            useNativeDates: true
+            outputFilteredResult: true
+            allowDuplicateColumns: false
+            tableDisplayConfig:
+              pageSize: 50
+              height: null
+              hideIcons: false
+              hideIndex: false
+              defaultSortColumn: null
+              defaultSortIndexColumn: null
+              defaultSortDirection: ASC
+              conditionalFormatting: null
+              calcs: null
+              filters: null
+              columnProperties:
+                - originalName: amount
+                  renameTo: null
+                  size: 158
+                  wrapText: null
+                  displayFormat: null
+                - originalName: commission_rate
+                  renameTo: null
+                  size: 144
+                  wrapText: null
+                  displayFormat: null
+                - originalName: row-index-0
+                  renameTo: null
+                  size: 46
+                  wrapText: null
+                  displayFormat: null
+              columnOrdering: null
+              customColumnOrdering: null
+              pinnedColumns: null
+              hiddenColumns: null
+              pinIndexColumns: false
+              showAggregations: false
+              columnAggregations: null
+        - cellType: CHARTV2
+          cellId: d6cb8043-5042-497a-9d19-9f6499e57f4d
+          cellLabel: Amount per agreement
+          config:
+            height: null
+            chartSpec:
+              type: layered
+              layers:
+                - id: 2bf285a8-3428-4dfb-82ed-49c903fa3299
+                  xAxis:
+                    type: number
+                    style:
+                      grid:
+                        style: solid
+                      ticks: {}
+                      labels: {}
+                    dataFrameColumn: commission_rate
+                  series:
+                    - id: f9a9177b-a91e-4ee5-9633-b523ae94dc24
+                      type: scatter
+                      axis:
+                        type: number
+                        style:
+                          grid:
+                            style: solid
+                          ticks: {}
+                          labels: {}
+                      dataFrameColumns:
+                        - amount
+                      colorOrder: ascending
+                      color:
+                        type: static
+                        color: "#E45756"
+                      opacity:
+                        type: static
+                        value: 1
+                      tooltip:
+                        type: auto
+                      filled: true
+                  dataFrame: amount_per_agreement
+              settings:
+                legend:
+                  position: right
+                tooltip: true
+                selectionEnabled: false
+            chartSelection: {}
+            colorMappings: {}
+            resultVariable: filter_result
+            outputResult: false
+            displayType: CHART
+            displayTableConfig: null
+  - cellType: SQL
+    cellId: ce172b56-c6d6-49c5-8b38-5f47327d6ef8 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      source: |-
+        select   CORR(commission_rate, amount) AS correlation
+        from amount_per_agreement
+      dataFrameCell: false
+      dataConnectionId: c0610383-efc7-44c6-bd2f-0252dd6d3c94
+      resultVariableName: dataframe_3
+      useRichDisplay: false
+      sqlCellOutputType: PANDAS
+      useQueryMode: false
+      castDecimals: true
+      useNativeDates: true
+      outputFilteredResult: true
+      allowDuplicateColumns: false
+      tableDisplayConfig: null
+  - cellType: CODE
+    cellId: 74e560fe-b611-4f60-ae73-8e92ad6d33e8 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Correlation Analysis
+    config:
+      source: |-
+        import matplotlib.pyplot as plt
+        import matplotlib.ticker as mtick
+        import numpy as np
+
+        df = amount_per_agreement
+
+        # Ensure no NaN values are present
+        filtered_df = df.dropna(subset=["commission_rate", "amount"])
+
+        # Calculate correlation
+        if (
+            not filtered_df.empty
+            and filtered_df["commission_rate"].std() != 0
+            and filtered_df["amount"].std() != 0
+        ):
+            correlation = np.corrcoef(filtered_df["commission_rate"], filtered_df["amount"])[
+                0, 1
+            ]
+
+            # Perform linear regression
+            coefficients = np.polyfit(filtered_df["commission_rate"], filtered_df["amount"], 1)
+            slope = coefficients[0]
+            intercept = coefficients[1]
+            
+            plt.figure(figsize=(12, 6))
+
+            # Create scatter plot
+            plt.scatter(filtered_df["commission_rate"], filtered_df["amount"])
+
+            # Plot linear regression line
+            x_range = np.linspace(
+                min(filtered_df["commission_rate"]), max(filtered_df["commission_rate"]), 100
+            )
+            y_range = slope * x_range + intercept
+            
+            plt.plot(x_range, y_range, color="red", label="Linear Regression")
+
+            plt.title(f"Correlation between commission rate and amount: {correlation:.2f}")
+            plt.gca().xaxis.set_major_formatter(mtick.PercentFormatter(1))
+            plt.xlabel("Commission Rate")
+            plt.ylabel("Sales amount ($)")
+            plt.legend()
+
+            plt.show()
+        else:
+            print("Insufficient data for correlation and regression analysis.")
+  - cellType: TEXT
+    cellId: 8878c7f1-ab2d-48a3-937f-fc9c77027406 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: Event organizers and resellers have partnership agreements that define a commission rate (between 7% and 15%).
+        - type: paragraph
+          children:
+            - text: "We can see that the "
+            - bold: true
+              text: "sales generated by these agreements are not correlated to the commission rates "
+            - text: "(coeff. corr. < 0.01). "
+  - cellType: TEXT
+    cellId: 2f3d4d1a-a4e1-433e-9c84-220a559e961f # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: Select a region to display the most popular events organized in the region.
+  - cellType: TEXT
+    cellId: 06584327-4a6d-4a72-a4ee-d4689ab02514 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      richText:
+        - type: paragraph
+          children:
+            - text: Select a reseller and an event type to display the sales results.
+appLayout:
+  visibleMetadataFields:
+    - NAME
+    - DESCRIPTION
+    - AUTHOR
+    - LAST_EDITED
+    - LAST_RUN
+    - CATEGORIES
+    - STATUS
+    - TABLE_OF_CONTENTS
+  fullWidth: false
+  tabs:
+    - name: Tab 1
+      rows:
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: a68f9fa8-7c0c-42c8-9da8-902d01ca6a5a
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 25
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 53079f99-4bbb-4104-8549-d5417f95eec7
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+            - start: 25
+              end: 55
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 4e0f01a1-930b-4376-bdad-9c3e67494b23
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+            - start: 60
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 06584327-4a6d-4a72-a4ee-d4689ab02514
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 2871b7ff-5cc0-4e83-9a42-04a94b929697
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 1aa552e6-8b83-4a56-bb93-bfb421128269
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 30
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: aba703bb-15fa-4932-8a29-3412a8696dcf
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+            - start: 50
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 2f3d4d1a-a4e1-433e-9c84-220a559e961f
+                  sharedFilterId: null
+                  height: 50
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: c066451a-52c1-4e21-86d5-60b087dbbc24
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 57f33f3f-247a-495b-9514-93f4d0045df4
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 74e560fe-b611-4f60-ae73-8e92ad6d33e8
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 8878c7f1-ab2d-48a3-937f-fc9c77027406
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+sharedFilters: []
